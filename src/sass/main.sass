@@ -1,0 +1,30 @@
+
+@import "./common/_mixins.sass"
+@import "./common/_variables.sass"
+
+#admin
+	.container
+		max-width: unset!important
+	.video-js
+		max-width: 100%
+		max-height: 100%
+
+.slick-list
+	height: 100%
+	.slick-track
+		height: 100%
+
+.box
+	.content
+		&+hr
+			margin-top: -1rem
+
+.tabs.is-boxed.is-centered
+	li
+		a
+			color: $dark
+
+.icon.is-right.has-text-danger
+	display: none
+.icon.is-right.has-text-success
+	display: none

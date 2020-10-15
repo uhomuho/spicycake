@@ -9,7 +9,7 @@ export default () => {
 	const dev = process.env.NODE_ENV == 'development' ? true : false,
 				url = dev ? 'http://localhost:8081' : 'https://spicycake-backend.herokuapp.com/',
 				axiosInstance = axios.create({
-					baseURL: `${dev ? url : `http://uhomuhoproxy.herokuapp.com/${url}`}`
+					baseURL: `${dev ? url : `https://uhomuhoproxy.herokuapp.com/${url}`}`
 				}),
 				isHandlerEnabled = (config = {}) => !config.handlerEnabled,
 				errorHandler = error => {

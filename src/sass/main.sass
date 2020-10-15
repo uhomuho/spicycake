@@ -8,6 +8,9 @@
 	.video-js
 		max-width: 100%
 		max-height: 100%
+		
+.container
+	width: 1344px!important
 
 .slick-list
 	height: 100%
@@ -24,7 +27,28 @@
 		a
 			color: $dark
 
-.icon.is-right.has-text-danger
-	display: none
-.icon.is-right.has-text-success
-	display: none
+.icon.is-right.has-text-danger,
+.icon.is-right.has-text-success,
+.slick-arrow
+	display: none!important
+
+@media screen and (max-width: 1344px) 
+	#user
+		.container
+			width: 100%
+
+@media screen and (max-width: 320px)
+	html 
+		font-size: 11px!important
+@media screen and (min-width: 321px) 
+	html 
+		font-size: 12px!important
+@media screen and (min-width: 425px) 
+	html 
+		font-size: 14px!important
+@media screen and (min-width: 769px) 
+	html 
+		font-size: 15px!important
+@media screen and (min-width: 1024px)
+	html
+		font-size: 16px!important

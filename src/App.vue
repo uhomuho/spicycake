@@ -4,11 +4,8 @@
 </template>
 
 <script>
-
 export default {
-	name: 'sc',
-	components: {
-	}
+	name: 'sc'
 }
 </script>
 

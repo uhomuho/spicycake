@@ -9,7 +9,7 @@
 				b-input( type="textarea" v-model='formData.description' )
 			b-field( label="Цена" )
 				b-input( type="number" v-model='formData.price' )
-			b-field.file
+			//- b-field.file
 				b-upload( v-model="file" expanded)
 					a.button.is-primary.is-fullwidth
 						b-icon( icon="upload" )
@@ -25,7 +25,7 @@
 								b-icon(
 									icon="upload"
 									size="is-large")
-								p Перетащите фото или кликните для загрузки
+								p Перетащите файл или кликните для загрузки
 			.tags
 				span( v-for="(file, index) in formData.files"
 					:key="index"
@@ -37,6 +37,7 @@
 			b-field
 				.button.is-primary( @click='send' ) 
 					|Добавить
+	b-loader( v-model='loading' )
 </template>
 
 <script>
@@ -55,7 +56,8 @@ export default {
 			},
 			file: {
 				name: null
-			}
+			},
+			loading: false
 		}
 	},
 	methods: {
@@ -71,9 +73,10 @@ export default {
 			for (let i in this.formData.files) {
 				formData.append(`files`,this.formData.files[i])
 			}
-
+			this.loading = true
 			lessonsMethods.createLesson(formData)
 				.then(r => {
+					this.loading = false
 					Snackbar.open({
 						message: r.data.message ? r.data.message : r.data.err,
 						actionText: null

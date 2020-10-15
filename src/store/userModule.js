@@ -5,45 +5,51 @@ import cryptoJS from 'crypto-js'
 
 const encodeText = '2100kFlECmRf9905'
 
-// const encodeData = (data) => {
-// 	return cryptoJS.AES.encrypt(data, encodeText).toString()
-// }
 const decodeData = (data) => {
 	let bytes  = cryptoJS.AES.decrypt(data, encodeText)
 	bytes = bytes.toString(cryptoJS.enc.Utf8)
 	return JSON.parse(bytes)
 }
 
-let user = localStorage.user && localStorage.user !== 'null' ? decodeData(localStorage.user) : null
-
 export default {
 	namespaced: true,
 	state: {
-		user: user ? user : null
+		user: null
 	},
 	mutations: {
-		setUser: (state, payload) => state.user = payload
+		setUser: (state, payload) => payload ? state.user = decodeData(payload) : state.user = null
 	},
 	actions: {
-		apiUser({ commit }, params) {
-			userMethods.login(params.data)
-				.then(r => {
-					if (r.data.message) {
+		async apiUser({ commit }, params) {
+			if (params.byToken) {
+				await userMethods.loginbyToken(params.token)
+					.then(r => {
 						Snackbar.open({
 							actionText: null,
-							message: r.data.message
+							message: r.data.message,
+							position: "is-bottom-right"
 						})
-					} else {
-						if (params.stayIn) localStorage.user = r.data.user
-
-						let user = decodeData(r.data.user) 
-						commit('setUser', user)
-
-						if (params.isAdmin) return router.push({ name: 'Уроки' })
-						if (!params.isAdmin) return router.push({ name: 'Клиентские уроки' })
-					}
-				})
-
+						commit('setUser', r.data.user)
+					})
+			} else {
+				userMethods.login(params.data)
+					.then(r => {
+						if (r.data.message) {
+							Snackbar.open({
+								actionText: null,
+								message: r.data.message
+							})
+						} else {
+							let user = r.data.user
+	
+							if (params.data.stayIn) localStorage.token = user.sessionToken
+							commit('setUser', user)
+	
+							if (params.isAdmin) return router.push({ name: 'Уроки' })
+							if (!params.isAdmin) return router.push({ name: 'Клиентские уроки' })
+						}
+					})
+			}
 		}
 	}
 }

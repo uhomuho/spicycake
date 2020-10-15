@@ -2,6 +2,17 @@
 div
 	.container
 		.section
+			b-message(
+				v-if='user && !user.verify'
+				type="is-warning"
+				has-icon)
+				b.is-size-5 Внимание!
+				br
+				|Покупка лекций станет доступна 
+				b только после подтверждения аккаунта 
+				b в 
+				router-link( :to='{ name: "Account" }' ) личном кабинете
+			slot( name="title-bar" )
 			.columns.is-flex.is-multiline( v-if='lessons' )
 				.column.is-4-desktop.is-6-tablet.is-12-mobile( v-for='lesson in lessons' )
 					.column-container
@@ -22,6 +33,9 @@ export default {
 	computed: {
 		...mapState('lessons', {
 			lessons: state => state.lessons
+		}),
+		...mapState('user', {
+			user: state => state.user
 		})
 	},
 	methods: {
@@ -36,11 +50,4 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-	.container
-		width: 1344px
-		.tile.is-ancestor
-			.tile.is-parent
-				flex-wrap: wrap
-				.tile.is-child
-					padding: .75rem
 </style>

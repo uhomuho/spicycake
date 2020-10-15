@@ -25,7 +25,8 @@
 							type="password"
 							@change='counterPwd')
 					b-field
-						b
+						b-checkbox(v-model='stayIn')
+							|Оставаться в системе
 					b-field
 						button.button Войти
 </template>

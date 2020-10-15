@@ -1,5 +1,3 @@
-// import lessonsMethods from '@/api/lessonsMethods'
-
 import lessonsMethods from "../api/lessonsMethods"
 
 export default {
@@ -16,8 +14,13 @@ export default {
 		apiLessons({ commit }) {
 			lessonsMethods.getLessons()
 				.then(res => {
-					console.log(res.data)
 					commit('setLessons', res.data)
+				})
+		},
+		apiLesson({ commit }, params) {
+			lessonsMethods.getLesson(params)
+				.then(r => {
+					commit('setLesson', r.data)
 				})
 		}
 	}

@@ -1,8 +1,14 @@
 <template lang="pug">
 	header
-		.nav-item(v-if='!user')
+		.nav-item(v-if='!user || user.permissions !== 1')
 			h3.has-text-dark.is-size-4 SpicyCake Admin
-		.nav-item(v-if='user')
+		.nav-item.on-main(v-if='user')
+			b-button(
+				type="is-dark"
+				tag="router-link"
+				:to='{ name: "Homepage" }')
+				|Главная
+		.nav-item(v-if='user && user.permissions == 1')
 			.user.tag.is-medium.is-dark
 				b-icon.has-text-light(
 					pack="fas"
@@ -12,7 +18,7 @@
 					p.is-6
 						|{{ user.username }}
 		.nav-item(
-			v-if='user'
+			v-if='user && user.permissions == 1'
 			@click='logout')
 			b-icon.logout.has-text-dark(
 				pack="fas"
@@ -32,7 +38,7 @@ export default {
 		]),
 		logout() {
 			this.setUser(null)
-			localStorage.setItem('user', null)
+			localStorage.setItem('token', null)
 			this.$router.push({ name: 'LoginAdmin' })
 		}
 	}
@@ -53,6 +59,12 @@ header
 	.nav-item
 		padding: .5rem 1rem
 		border-left: 1px solid rgba($grey-light, .4)
+		&.on-main
+			.button
+				height: unset
+				padding: 
+					top: .1rem
+					bottom: .1rem
 	p, .content
 		margin-bottom: 0
 	.icon.logout

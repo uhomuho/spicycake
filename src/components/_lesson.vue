@@ -28,21 +28,21 @@
 				p {{ lesson.description }}
 			.content.bottom
 				p.is-size-4
-					|Цена: {{ lesson.price }} р.
+					|Цена: {{ lesson.price }} ₽
 		.card-footer( v-if='isAdmin' )
 			p.card-footer-item.has-text-danger( @click='deleteLesson(lesson._id)' )
 				|Удалить
 			router-link.card-footer-item.has-text-warning( :to='{name: "Редактировать урок", params: { id: lesson._id}}' )
 				|Редактировать
-		.card-footer( v-else )
-			p.card-footer-item.has-text-primary
-				|В корзину
+		.card-footer( v-else-if='user && user.verify' )
+			p.card-footer-item.has-text-primary(@click='pushToCart(lesson)')
+				|Добавить в корзину
 </template>
 
 <script>
 import lessonsMethods from '@/api/lessonsMethods'
 import { SnackbarProgrammatic as Snackbar } from 'buefy'
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations, mapState } from 'vuex'
 import VueSlickCarousel from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
@@ -58,9 +58,17 @@ export default {
 		VueSlickCarousel
 	},
 	props: ['lesson', 'isAdmin'],
+	computed: {
+		...mapState('user', {
+			user: state => state.user
+		})
+	},
 	methods: {
 		...mapActions('lessons', [
 			'apiLessons'
+		]),
+		...mapMutations('cart', [
+			'pushToCart'
 		]),
 		deleteLesson(id) {
 			lessonsMethods.deleteLesson(id)
@@ -115,4 +123,5 @@ export default {
 				padding: 0 .25rem
 	.card-footer-item
 		cursor: pointer
+		user-select: none
 </style>

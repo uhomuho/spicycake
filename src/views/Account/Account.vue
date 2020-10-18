@@ -44,7 +44,7 @@ export default {
 	data() {
 		return {
 			subtitle: this.$route.meta.subtitle,
-			code: 228
+			code: null
 		}
 	},
 	computed: {

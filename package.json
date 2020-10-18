@@ -7,7 +7,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "deploy_ftp": "vue-cli-service ftpdeploy --genHist --diffFileOnly --ftpCfgPath /ftpdeploy/ --ftpHistPath /ftpdeploy/",
-    "production": "npm run build && npm run deploy_ftp"
+		"production": "npm run build && npm run deploy_ftp",
+		"git": "git add . && git commit -m 'Frontend update' && git push"
   },
   "dependencies": {
     "axios": "^0.20.0",

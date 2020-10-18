@@ -1,9 +1,9 @@
 <template lang="pug">
 	.card
-		.card-header
+		router-link.card-header( :to='{ name: "Lesson", params: { lessonId: lesson._id } }' )
 			.card-header-title
 				|{{ lesson.name }}
-		.card-image
+		.card-image( :to='{ name: "Lesson", params: { lessonId: lesson._id } }' )
 			figure.image.is-16by9
 				video-player.video-player-box(
 					v-if='isAdmin && !photo'
@@ -11,11 +11,12 @@
 					:options="playerOptions(lesson)")
 				.slider-cotnainer(v-else-if='!isAdmin || photo')
 					VueSlickCarousel(
+						v-if='lesson && lesson.images'
 						:dots='true'
 						lazyLoad="progressive")
 						img(
 							v-for='(image, index) in lesson.images'
-							:src='`${$backendUrl}lessons/${lesson._id}/img/${image}`'
+							:src='`https://spicycake.online?type=img&id=${lesson._id}&name=${image}`'
 							:alt='lesson.name')
 		.card-content
 			.breadcrumb.is-centered( v-if='isAdmin' )
@@ -29,7 +30,7 @@
 			.content.bottom
 				p.is-size-4
 					|Цена: {{ lesson.price }} ₽
-		.card-footer( v-if='isAdmin' )
+		.card-footer( v-if='user && user.permissions == 1' )
 			p.card-footer-item.has-text-danger( @click='deleteLesson(lesson._id)' )
 				|Удалить
 			router-link.card-footer-item.has-text-warning( :to='{name: "Редактировать урок", params: { id: lesson._id}}' )
@@ -86,9 +87,9 @@ export default {
 				language: 'ru',
 				sources: [{
 					type: "video/mp4",
-					src: `${this.$backendUrl}/lessons/${lesson._id}/${lesson.video}`
+					src: `https://spicycake.online?id=${lesson._id}&name=${lesson.video}`
 				}],
-				poster: `${this.$backendUrl}/lessons/${lesson._id}/img/${lesson.images[0]}`
+				poster: `https://spicycake.online?type=img&id=${lesson._id}&name=${lesson.images[0]}`
 			}
 		}
 	}

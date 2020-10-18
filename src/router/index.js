@@ -32,6 +32,7 @@ import LoginAdmin from '@/views/Admin/loginAdmin'
 import HomePage from '@/views/User/HomePage'
 import Main from '@/views/User/Main'
 import UserLessons from '@/views/User/UserLessons'
+import UserLesson from '@/views/User/UserLesson'
 import Cart from '@/views/User/Cart'
 import Reset from '@/views/User/ResetPassword'
 
@@ -103,14 +104,16 @@ let router = new Router({
 					component: UserLessons,
 					meta: {
 						title: 'Уроки'
+					}
+				},
+				{
+					path: 'lessons/:lessonId',
+					name: 'Lesson',
+					component: UserLesson,
+					meta: {
+						title: 'Урок'
 					},
-					beforeEnter: (to, from, next) => {
-						if (to.name == 'Клиентские уроки' && isLoggedIn()) {
-							next()
-						} else {
-							next({ name: 'Homepage' })
-						}
-					},
+					props: true
 				},
 				{
 					path: 'cart',
@@ -125,7 +128,7 @@ let router = new Router({
 						} else {
 							next({ name: 'Homepage' })
 						}
-					},
+					}
 				},
 				{
 					path: 'account',
@@ -148,6 +151,13 @@ let router = new Router({
 							meta: {
 								title: 'Личный кабинет',
 								subtitle: 'Уроки'
+							},
+							beforeEnter: (to, from, next) => {
+								if (to.name == 'AccountLessons' && isLoggedIn()) {
+									next()
+								} else {
+									next({ name: 'Homepage' })
+								}
 							}
 						}
 					]
@@ -229,18 +239,16 @@ let router = new Router({
 	]
 })
 
-// router.beforeEach(async (to, from, next) => {
-// 	if (localStorage.token && localStorage.token !== 'null' && !isLoggedIn()) {
-// 		await store.dispatch('user/apiUser', {
-// 			byToken: true,
-// 			token: localStorage.token
-// 		})
-// 		next()
-// 	} else if (to.name !== 'Homepage' && !isLoggedIn()) {
-// 		next({ name: 'Homepage' })
-// 	} else {
-// 		next()
-// 	}
-// })
+router.beforeEach(async (to, from, next) => {
+	if (localStorage.token && localStorage.token !== 'null' && !isLoggedIn()) {
+		await store.dispatch('user/apiUser', {
+			byToken: true,
+			token: localStorage.token
+		})
+		next()
+	} else {
+		next()
+	}
+})
 
 export default router

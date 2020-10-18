@@ -19,6 +19,8 @@ div
 						Lesson(
 							:lesson='lesson'
 							:isAdmin='false')
+			.container.loading(v-else)
+				b-loading( :is-full-page='false' v-model='loading' )
 </template>
 
 <script>
@@ -29,6 +31,11 @@ export default {
 	name: 'UserLessons',
 	components: {
 		Lesson
+	},
+	data() {
+		return {
+			loading: true
+		}
 	},
 	computed: {
 		...mapState('lessons', {
@@ -50,4 +57,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.container.loading
+	height: 10rem
 </style>

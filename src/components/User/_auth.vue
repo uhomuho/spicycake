@@ -167,7 +167,14 @@ export default {
 					message: 'Заполните все поля!'
 				})
 			}
-			this.apiUser({ data: this.formDataLog, stayIn: this.stayIn, isAdmin: false})
+			this.apiUser({ 
+				data: {
+					username: this.formDataLog.username.toLowerCase(),
+					password: this.formDataLog.password,
+					stayIn: this.formDataLog.stayIn
+				}, 
+				isAdmin: false
+			})
 		},
 		register() {
 			for ( let req in this.formData ) {
@@ -187,6 +194,7 @@ export default {
 				})
 			}
 			this.loading = true
+			this.formDataReg.instagram = this.formDataReg.instagram.toLowerCase()
 			userMethods.register(this.formDataReg)
 				.then(r => {
 					this.loading = false

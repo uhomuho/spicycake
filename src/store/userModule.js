@@ -22,7 +22,7 @@ export default {
 	actions: {
 		async apiUser({ commit }, params) {
 			if (params.byToken) {
-				await userMethods.loginbyToken(params.token)
+				await userMethods.loginbyToken(params)
 					.then(r => {
 						Snackbar.open({
 							actionText: null,
@@ -41,9 +41,12 @@ export default {
 							})
 						} else {
 							let user = r.data.user
-	
-							if (params.data.stayIn) localStorage.token = user.sessionToken
+							
 							commit('setUser', user)
+							if (params.data.stayIn) {
+								user = decodeData(user)
+								localStorage.token = user.sessionToken
+							}
 	
 							if (params.isAdmin) return router.push({ name: 'Уроки' })
 							if (!params.isAdmin) return router.push({ name: 'Клиентские уроки' })

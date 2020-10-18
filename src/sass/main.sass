@@ -32,10 +32,16 @@
 .slick-arrow
 	display: none!important
 
-@media screen and (max-width: 1344px) 
-	#user
-		.container
-			width: 100%
+.mdi-24px.mdi-set, .mdi-24px.mdi:before
+	font-size: 1.5rem
+
+#user
+	.loading-background
+		display: none
+
+@media screen and (max-width: 1344px)
+	.container
+		width: 100%!important
 
 @media screen and (max-width: 320px)
 	html 
@@ -49,6 +55,13 @@
 @media screen and (min-width: 769px) 
 	html 
 		font-size: 15px!important
+@media screen and (max-width: 768px)
+	form
+		.level
+			.level-right
+				margin-top: .5rem
+			.level-item
+				justify-content: flex-start
 @media screen and (min-width: 1024px)
 	html
 		font-size: 16px!important

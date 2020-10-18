@@ -34,8 +34,7 @@
 						.button.is-info.is-light( 
 							@click="toggleModal"
 							v-if='!user' ) Авторизация
-					.navbar-burger.burger( 
-						v-if='user'
+					.navbar-burger.burger(
 						@click="toggleMenu"
 						:class='openMenu ? "is-active" : ""')
 						span
@@ -44,10 +43,9 @@
 				.navbar-menu(
 					:class='openMenu ? "is-active" : ""')
 					.navbar-start(
-						v-if='user'
 						@click='toggleMenu')
 						.navbar-item
-							router-link( :to='{ name: "Клиентские уроки" }') Уроки
+							router-link( :to='{ name: "Клиентские уроки" }' ) Уроки
 					.navbar-end
 						.navbar-item.buttons.is-hidden-mobile
 							b-button(
@@ -224,6 +222,8 @@ nav
 												right: .125rem
 
 @media screen and (max-width: 1023px)
+	.is-hidden-mobile
+		display: none
 	.navbar-brand
 		.navbar-burger
 			margin-left: unset
@@ -239,10 +239,6 @@ nav
 			.button,
 			.icon-container
 				margin-bottom: 0
-
-@media screen and (max-width: 768px)
-	.container
-		padding: 0 .75rem
 	.navbar-menu
 		text-align: center
 		width: 100%
@@ -252,4 +248,8 @@ nav
 		left: 0
 		right: 0
 		z-index: 9
+
+@media screen and (max-width: 768px)
+	.container
+		padding: 0 .75rem
 </style>

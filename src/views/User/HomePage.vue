@@ -31,6 +31,17 @@ div
 <script>
 export default {
 	name: 'HomePage',
+	data() {
+		return {
+			bg: [
+				'/img/main_bg.png',
+				'/img/main_bg_1.png',
+				'/img/main_bg_2.png',
+				'/img/main_bg_3.png',
+				'/img/main_bg_4.png',
+			]
+		}
+	},
 	props: ['user'],
 	methods: {
 		paralax(e) {
@@ -40,6 +51,13 @@ export default {
 			
 			bg.style.backgroundPosition = `${offsetX}px ${offsetY}px` 
 		}
+	},
+	mounted() {
+		let bg = document.querySelector('.bg'),
+				index = Math.floor(Math.random() * (this.bg.length - 1))
+
+
+		bg.style.backgroundImage = `url('${this.bg[index]}')`
 	}
 }
 </script>
@@ -58,7 +76,7 @@ export default {
 		right: -50%
 		left: -50%
 		z-index: 1
-		background-image: url('../../assets/main_bg.png')
+		background-image: url('/img/main_bg.png')
 		background-size: cover
 		background-repeat: no-repeat
 		background-position: 0px 0px
@@ -68,7 +86,7 @@ export default {
 		position: absolute
 		top: 0
 		left: 0
-		backdrop-filter: blur(5px)
+		backdrop-filter: blur(5px) brightness(70%)
 		z-index: 2
 	.container
 		position: relative
@@ -77,4 +95,7 @@ export default {
 			*
 				color: #fff
 				text-shadow: 0px 0px 8px #000
+@media screen and (max-width: 768px)
+	.bg
+		background-position: 50%!important
 </style>

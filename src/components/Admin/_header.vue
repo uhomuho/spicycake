@@ -16,7 +16,7 @@
 					size="is-small")
 				.content.has-text-light
 					p.is-6
-						|{{ user.username }}
+						|{{ user.name }}
 		.nav-item(
 			v-if='user && user.permissions == 1'
 			@click='logout')

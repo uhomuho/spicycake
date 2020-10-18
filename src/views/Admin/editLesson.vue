@@ -152,8 +152,7 @@ export default {
 	beforeMount() {
 		if (this.id) {
 			this.apiLesson({
-				id: this.id,
-				isAdmin: true
+				id: this.id
 			})
 		} else {
 			Snackbar.open({

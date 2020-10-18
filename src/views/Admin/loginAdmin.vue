@@ -64,7 +64,14 @@ export default {
 					message: 'Заполните все поля!'
 				})
 			}
-			this.apiUser({ data: this.formData, stayIn: this.stayIn, isAdmin: true})
+			this.apiUser({ 
+				data: {
+					username: this.formData.username.toLowerCase(),
+					password: this.formData.password,
+					stayIn: this.stayIn
+				}, 
+				isAdmin: true
+			})
 		}
 	}
 }
